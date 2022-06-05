@@ -2,20 +2,20 @@ package com.geektech.lovecalculator;
 
 import android.app.Application;
 
-import com.geektech.lovecalculator.network.LoveApi;
-import com.geektech.lovecalculator.network.RetrofitService;
+import dagger.hilt.android.HiltAndroidApp;
 
+@HiltAndroidApp
 public class App extends Application {
 
-    public static LoveApi api;
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-
-        RetrofitService retrofitService = new RetrofitService();
-        api = retrofitService.getLoveApi();
-
-
-    }
+//    public static LoveApi api;
+//
+//    @Override
+//    public void onCreate() {
+//        super.onCreate();
+//
+//        RetrofitService retrofitService = new RetrofitService();
+//        api = retrofitService.getLoveApi();
+//
+//
+//    }
 }
