@@ -2,4 +2,8 @@
     <string name="app_name">LoveCalculator</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="first_board_page">You should take the time to help those\n who need you</string>
+    <string name="second_board_page">It is now longer possible for\n you to cherish love</string>
+    <string name="third_board_page">We have made the correction for you\n dont worry\n Maybe someone is waiting for you </string>
 </resources>

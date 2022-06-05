@@ -21,6 +21,7 @@
         android:id="@+id/tv_res_fname"
         android:fontFamily="@font/sss"
         tools:text="Name"
+        android:background="@drawable/bg_text_view"
         android:textColor="@color/black"
         android:textSize="18sp"
         app:layout_constraintTop_toBottomOf="@+id/iv_res"
@@ -41,6 +42,7 @@
 
     <TextView
         android:id="@+id/tv_res_sname"
+        android:background="@drawable/bg_text_view"
         android:fontFamily="@font/sss"
         tools:text="Name"
         android:textColor="@color/black"
@@ -85,6 +87,21 @@
         android:layout_marginTop="50dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_try_again"
+        android:text="Try Again"
+        android:textAllCaps="false"
+        android:fontFamily="@font/abel"
+        android:textSize="14sp"
+        app:cornerRadius="40dp"
+        android:backgroundTint="@color/red"
+        android:layout_marginBottom="30dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="100dp"
+        android:layout_height="50dp"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

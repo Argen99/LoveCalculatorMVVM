@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
@@ -18,18 +19,24 @@ import com.geektech.lovecalculator.App;
 import com.geektech.lovecalculator.R;
 import com.geektech.lovecalculator.databinding.FragmentFirstBinding;
 import com.geektech.lovecalculator.network.LoveModel;
+import com.geektech.lovecalculator.prefs.Prefs;
+import com.geektech.lovecalculator.viewmodel.MainViewModel;
 
+import javax.inject.Inject;
+
+import dagger.hilt.android.AndroidEntryPoint;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-
+@AndroidEntryPoint
 public class FirstFragment extends Fragment {
 
     private FragmentFirstBinding binding;
+    private MainViewModel viewModel;
+    private String firstName, secondName;
 
-    private final String HOST = "love-calculator.p.rapidapi.com";
-    public static String KEY = "2611949ba1msha3bd1bac2be828cp1e93bejsn05be3f998e60";
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,6 +49,7 @@ public class FirstFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        viewModel = new ViewModelProvider(this).get(MainViewModel.class);
         initClickers();
 
     }
@@ -50,7 +58,6 @@ public class FirstFragment extends Fragment {
         binding.btnCalculate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                binding.progressBar.setVisibility(View.VISIBLE);
                 getDataFromLoveApi();
             }
         });
@@ -61,31 +68,54 @@ public class FirstFragment extends Fragment {
         NavController navController = Navigation.findNavController
                 (requireActivity(), R.id.nav_host_fragment);
 
-        String firstName = binding.etFname.getText().toString();
-        String secondName = binding.etSname.getText().toString();
+        if (binding.etFname.getText().toString().isEmpty()) {
+            binding.etFname.setError("Enter name");
+        }else{
+            firstName = binding.etFname.getText().toString();
+        }
+        if (binding.etSname.getText().toString().isEmpty()){
+            binding.etSname.setError("Enter name");
+        }else {
+            secondName = binding.etSname.getText().toString();
+        }
 
-        App.api.loveCalculate(firstName,secondName, HOST, KEY).enqueue(new Callback<LoveModel>() {
-            @Override
-            public void onResponse(Call<LoveModel> call, Response<LoveModel> response) {
-                if (response.isSuccessful()){
-                    Log.e("ololo", "anFailure" + response.body());
+        if (!binding.etFname.getText().toString().isEmpty() &&
+                !binding.etSname.getText().toString().isEmpty())
+            binding.progressBar.setVisibility(View.VISIBLE);
 
 
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("key",response.body());
+        viewModel.getLoveModelLiveData(firstName,secondName).observe(this, model -> {
+            Log.e("ololo", "getDataFromLoveApi " + model.result);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("key",model);
+            navController.navigate(R.id.secondFragment,bundle);
 
-                    navController.navigate(R.id.secondFragment,bundle);
 
-                    binding.progressBar.setVisibility(View.GONE);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<LoveModel> call, Throwable t) {
-
-                Log.e("ololo", "anFailure" + t.getLocalizedMessage());
-            }
         });
+
+
+//        App.api.loveCalculate(firstName,secondName, HOST, KEY).enqueue(new Callback<LoveModel>() {
+//            @Override
+//            public void onResponse(Call<LoveModel> call, Response<LoveModel> response) {
+//                if (response.isSuccessful()){
+//                    Log.e("ololo", "anFailure" + response.body());
+//
+//
+//                    Bundle bundle = new Bundle();
+//                    bundle.putSerializable("key",response.body());
+//
+//                    navController.navigate(R.id.secondFragment,bundle);
+//
+//                    binding.progressBar.setVisibility(View.GONE);
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<LoveModel> call, Throwable t) {
+//
+//                Log.e("ololo", "anFailure" + t.getLocalizedMessage());
+//            }
+//        });
 
     }
 }
