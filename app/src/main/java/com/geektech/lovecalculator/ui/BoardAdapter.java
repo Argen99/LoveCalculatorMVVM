@@ -15,6 +15,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.BoardViewHol
 
     private String[] titles = new String[] {"Have a good time","Cherishing love","Have a breakup?"};
     private int[] texts = new int[] {R.string.first_board_page,R.string.second_board_page,R.string.third_board_page};
+    private int[] lottie = new int[] {R.raw.love_float,R.raw.love_heart,R.raw.lover_people};
 
     @NonNull
     @Override
@@ -46,6 +47,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.BoardViewHol
         public void bind(int position) {
             binding.boardTitle.setText(titles[position]);
             binding.boardText.setText(texts[position]);
+            binding.animationView.setAnimation(lottie[position]);
             if (position == titles.length - 1)
                 binding.btnStartBoard.setVisibility(View.VISIBLE);
             else

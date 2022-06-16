@@ -25,7 +25,6 @@ public class MainActivity extends AppCompatActivity {
     @Inject
     Prefs prefs;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,12 +37,13 @@ public class MainActivity extends AppCompatActivity {
 
         prefs.save(this);
 
-        if (!prefs.isShown()) {
+        //if (prefs.isShown()) {
             navController.navigate(R.id.boardFragment);
-        }
+        //}
+
     }
     public void onStartClick(View view) {
-        prefs.saveState();
+        prefs.saveState(this);
         navController.navigateUp();
     }
 }

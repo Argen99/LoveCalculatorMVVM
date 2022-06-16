@@ -15,7 +15,7 @@ public class Prefs {
         preferences = context.getSharedPreferences("settings", Context.MODE_PRIVATE);
     }
 
-    public void saveState(){
+    public void saveState(Context context){
         preferences.edit().putBoolean("isShown",true).apply();
     }
 
